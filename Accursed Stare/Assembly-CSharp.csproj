@@ -46,7 +46,12 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\ColliderTest.cs" />
+     <Compile Include="Assets\Scripts\Orbit.cs" />
+     <Compile Include="Assets\Scripts\StarGravity.cs" />
+     <Compile Include="Assets\Scripts\StellarGravity.cs" />
      <Compile Include="Assets\Scripts\SunMove.cs" />
+     <Compile Include="Assets\Scripts\TestMove.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
