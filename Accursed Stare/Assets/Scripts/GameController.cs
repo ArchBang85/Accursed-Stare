@@ -10,6 +10,27 @@ public class GameController : MonoBehaviour {
     private gravityWells gW;
     public List<Transform> gWells = new List<Transform>();
 
+    public void pause() 
+    {
+        Time.timeScale = 0.0f;
+    
+    }
+
+    public void halfSpeed()
+    {
+        Time.timeScale = 0.5f;
+    }
+    public void fullSpeed()
+    {
+        Time.timeScale = 1.0f;
+    }
+
+    public void doubleSpeed()
+    {
+        Time.timeScale = 2.0f;
+    }
+
+
 	// Use this for initialization
 	void Start () {
         gW = new gravityWells();

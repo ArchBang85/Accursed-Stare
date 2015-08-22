@@ -74,16 +74,17 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Buttons.cs" />
     <Compile Include="Assets\Scripts\ColliderTest.cs" />
     <Compile Include="Assets\Scripts\GameController.cs" />
-    <Compile Include="Assets\Scripts\Orbit.cs" />
-    <Compile Include="Assets\Scripts\ParticleSwirl.cs" />
+    <Compile Include="Assets\Scripts\Old\Orbit.cs" />
+    <Compile Include="Assets\Scripts\Old\ParticleSwirl.cs" />
+    <Compile Include="Assets\Scripts\Old\StarGravity2.cs" />
+    <Compile Include="Assets\Scripts\Old\StellarGravity.cs" />
+    <Compile Include="Assets\Scripts\Old\SunMove.cs" />
     <Compile Include="Assets\Scripts\Repulsion.cs" />
     <Compile Include="Assets\Scripts\StarGravity.cs" />
-    <Compile Include="Assets\Scripts\StarGravity2.cs" />
-    <Compile Include="Assets\Scripts\StellarGravity.cs" />
     <Compile Include="Assets\Scripts\SunBehaviour.cs" />
-    <Compile Include="Assets\Scripts\SunMove.cs" />
     <Compile Include="Assets\Scripts\TestMove.cs" />
   </ItemGroup>
   <ItemGroup>
