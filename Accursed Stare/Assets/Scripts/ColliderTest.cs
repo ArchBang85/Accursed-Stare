@@ -15,7 +15,7 @@ public class ColliderTest : MonoBehaviour {
 
     void onTriggerEnter()
     {
-        Debug.Log("Oi");
+       // Debug.Log("Oi");
 
     }
 }
