@@ -13,7 +13,7 @@ GameObject:
   - 96: {fileID: 9643170}
   - 58: {fileID: 5862150}
   - 50: {fileID: 5005322}
-  - 114: {fileID: 11471000}
+  - 114: {fileID: 11451386}
   m_Layer: 0
   m_Name: Planet
   m_TagString: Gravity
@@ -28,8 +28,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 102910}
   m_LocalRotation: {x: .500000119, y: -.5, z: -.5, w: .49999994}
-  m_LocalPosition: {x: 0, y: .300000012, z: .790000021}
-  m_LocalScale: {x: .100000001, y: 1, z: .100000031}
+  m_LocalPosition: {x: -3.04993176, y: 1.86252761, z: 0}
+  m_LocalScale: {x: .100000001, y: .100000001, z: .100000031}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -43,7 +43,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 351151f396fdbd3478a0637be89e0a83, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -63,7 +63,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 102910}
-  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!50 &5005322
 Rigidbody2D:
   serializedVersion: 2
@@ -71,15 +71,15 @@ Rigidbody2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 102910}
-  m_Mass: .200000003
+  m_Mass: .100000001
   m_LinearDrag: 0
   m_AngularDrag: .00499999989
   m_GravityScale: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
+  m_CollisionDetection: 1
+  m_Constraints: 4
 --- !u!58 &5862150
 CircleCollider2D:
   m_ObjectHideFlags: 1
@@ -92,7 +92,7 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: .00999999978
+  m_Radius: .00499999989
 --- !u!96 &9643170
 TrailRenderer:
   m_ObjectHideFlags: 1
@@ -100,10 +100,10 @@ TrailRenderer:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 102910}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
   m_Materials:
-  - {fileID: 10301, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: f63c576739a709747a1a571260d4fabd, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -118,8 +118,8 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_Time: 24
-  m_StartWidth: .00999999978
-  m_EndWidth: .00999999978
+  m_StartWidth: .0199999996
+  m_EndWidth: .0130000003
   m_Colors:
     m_Color[0]:
       serializedVersion: 2
@@ -136,9 +136,9 @@ TrailRenderer:
     m_Color[4]:
       serializedVersion: 2
       rgba: 16777215
-  m_MinVertexDistance: .0700000003
+  m_MinVertexDistance: .00999999978
   m_Autodestruct: 0
---- !u!114 &11471000
+--- !u!114 &11451386
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -146,16 +146,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 102910}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e085aeeddf2cc1d48a9a8be51386dc90, type: 3}
+  m_Script: {fileID: 11500000, guid: 8fc33d8772b33f549acceb7e92411e66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GravityPower: .0500000007
-  Planet: {fileID: 0}
-  GravityObjects: []
-  Planets: []
-  GravityRadius: .100000001
+  GravityPower: .5
+  GravityRadius: .5
   initVelocity: 1
-  initSpeed: 2
+  initSpeed: .00200000009
+  mass: 0
+  deathExplosion: {fileID: 194208, guid: 44a7feb5deea7c64793d72af31e833e7, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -165,7 +164,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 0}
       propertyPath: m_Radius
-      value: .00999999978
+      value: .00499999989
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Time
@@ -173,7 +172,71 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_MinVertexDistance
-      value: .0700000003
+      value: .00999999978
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_StartWidth
+      value: .0199999996
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_EndWidth
+      value: .0130000003
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 351151f396fdbd3478a0637be89e0a83, type: 2}
+    - target: {fileID: 0}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: GravityPower
+      value: .5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: GravityRadius
+      value: .5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: initVelocity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: initSpeed
+      value: .00200000009
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Mass
+      value: .100000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Constraints
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: deathExplosion
+      value: 
+      objectReference: {fileID: 194208, guid: 44a7feb5deea7c64793d72af31e833e7, type: 2}
+    - target: {fileID: 0}
+      propertyPath: m_CollisionDetection
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
