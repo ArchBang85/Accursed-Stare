@@ -8,9 +8,10 @@ public class Orbit : MonoBehaviour {
     public bool clockwise = true;
     public int dir = 1;
 
+
 	// Use this for initialization
 	void Start () {
-        speed = Random.Range(0.5f, 3.0f);
+	    
 	}
 	
 	// Update is called once per frame

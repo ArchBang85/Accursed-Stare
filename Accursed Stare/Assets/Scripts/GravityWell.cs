@@ -3,29 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class GravityWell : GravityObject {
-    private int startingCost = 200;
-    private int energyCost = 2;
+
+
+
+    private int energyCost;
     public void setEnergyCost(int cost)
     {
         energyCost = cost;
     }
-    public int getEnergyCost()
+    public int getEnergyCost(int cost)
     {
         return energyCost;
     }
-
-    public int getStartingCost()
-    {
-        return startingCost;
-    }
-
-
-
-
-
-
-    // on mouse click destroy
-
 
 
 }

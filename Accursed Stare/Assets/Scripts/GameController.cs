@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
 
@@ -15,35 +14,23 @@ public class GameController : MonoBehaviour {
      * Start phasing
      * Sounds
      * 
-    */    private bool gameEnd = false;
+    */
     private GameObject Background;
     public GameObject gravityWellObject;
     public GameObject repulsion;
-
-    private bool threeGotten = false;
-
-    public GameObject introText;
     private gravityWells gW;
-
-    private int zoomLevel = 1;
-
-    public mainVariables mainData;
-    public List<GameObject> gWells = new List<GameObject>();
-    public bool live = false;
+   
+    private mainVariables mainData;
+    public List<Transform> gWells = new List<Transform>();
+    private bool live = true;
 
     public AudioSource music;
-
-    public GameObject EnergyText;
-    public GameObject StarText;
 
 	// check for clicks on the background cube
      bool one_click = false;
      bool timer_running;
      float timer_for_double_click = 0.0f;
-    public void restartLevel()
-     {
-         Application.LoadLevel(Application.loadedLevel);
-     }
+ 
 
     public void soundToggle()
      {
@@ -65,27 +52,14 @@ public class GameController : MonoBehaviour {
         float originalSize = transform.GetComponent<Camera>().orthographicSize;
 
         float increment = diff / duration;
-        float zoomSpeed = duration;
-        if (diff < 0)
+
+        for (float f = 0f; f < Mathf.Abs(diff); f += Time.deltaTime)
         {
-            for (float f = 0f; f < Mathf.Abs(diff); f += Time.deltaTime * zoomSpeed)
-            {
-
-                transform.GetComponent<Camera>().orthographicSize = originalSize - f;
-
-                yield return null;
-            }
+            transform.GetComponent<Camera>().orthographicSize = originalSize + f;
+            
+            yield return null;
         }
-        else
-        {
-            for (float f = 0f; f < Mathf.Abs(diff); f += Time.deltaTime * zoomSpeed)
-            {
 
-                transform.GetComponent<Camera>().orthographicSize = originalSize + f;
-
-                yield return null;
-            }
-        }
 
     }
 
@@ -99,74 +73,29 @@ public class GameController : MonoBehaviour {
     public void halfSpeed()
     {
         Time.timeScale = 0.5f;
-        music.pitch = 0.5f;
     }
     public void fullSpeed()
     {
         Time.timeScale = 1.0f;
-        music.pitch = 1.0f;
     }
 
     public void fastSpeed()
     {
         Time.timeScale = 4.0f;
-        music.pitch = 1.4f;
     }
 
     // at the start get the game to run at 10x speed for 5 secs
     public IEnumerator FastForward(float duration)
     {
-     
-        yield return new WaitForSeconds(0.7f);
+
+        yield return new WaitForSeconds(0.1f);
        
         Time.timeScale = 25.0f;
        // Debug.Log("time at 10");
-        yield return new WaitForSeconds(50.0f);
+        yield return new WaitForSeconds(45.0f);
 
         Time.timeScale = 1.0f;
       //  Debug.Log("time at 1");
-        GameObject.Find("SunHeart").GetComponent<SunBehaviour>().SunReverse();
-        introText.SetActive(true);
-        live = false;
-
-
-    }
-
-    public void zoomToggle()
-    {
-        float dur = 2.6f;
-        zoomLevel++;
-        if(zoomLevel > 4)
-        {
-            zoomLevel = 0;
-            transform.parent = null;
-            transform.position = new Vector2(0, 0);
-        }
-        if(zoomLevel == 0)
-        {
-            StartCoroutine(CameraTransition(0.8f, dur));
-        }
-        if(zoomLevel == 1)
-        {
-            StartCoroutine(CameraTransition(5.0f, dur));
-
-        }
-        if (zoomLevel == 2)
-        {
-            StartCoroutine(CameraTransition(6.3f, dur));
-
-        }
-        if (zoomLevel == 3)
-        {
-            StartCoroutine(CameraTransition(10.0f, dur));
-
-        } 
-        if (zoomLevel == 4)
-        {
-            StartCoroutine(CameraTransition(5.0f, dur));
-            transform.parent = GameObject.Find("GravityWell").transform;
-            transform.position = new Vector2(GameObject.Find("GravityWell").transform.position.x, GameObject.Find("GravityWell").transform.position.y);
-        }
 
     }
 
@@ -176,116 +105,89 @@ public class GameController : MonoBehaviour {
         gW = new gravityWells();
         mainData = new mainVariables();
         Background = GameObject.Find("Background");
-
-        StartCoroutine(StartTransition());
-
-        InvokeRepeating("updateEnergy", 30.0f, 0.3f);
-        
-    }
-    IEnumerator StartTransition()
-    {
-        yield return new WaitForSeconds(0.4f);
-        StartCoroutine(CameraTransition(0.7f, 0.4f));
-        yield return new WaitForSeconds(0.7f);
         StartCoroutine(FastForward(5.0f));
-   
     }
-    public void updateStarText()
-    {
-        StarText.GetComponent<Text>().text = "Stars the sun has been given: " + mainData.starsEaten +  "/6";
-    }
+
+
 	
 	// Update is called once per frame
 	void Update () {
 
-        if(!live && Time.time > 30f)
+        if (Time.time % 1 == 0)
         {
-            if(Input.anyKeyDown)
-            {
-                live = true;
-                zoomToggle();
-                introText.SetActive(false);
-            }
+            // update every second
+            updateEnergy();
+        }
+
+        if(Input.GetKeyDown(KeyCode.Z))
+        {
+            StartCoroutine(CameraTransition(6, 5.0f));
+        }
+    // General controls
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Application.LoadLevel(Application.loadedLevel);
         }
 
         if (live)
         {
-            if (Input.GetKeyDown(KeyCode.Z))
-            {
-                zoomToggle();
-                //StartCoroutine(CameraTransition(6, 5.0f));
-            }
-            // General controls
-            if (Input.GetKeyDown(KeyCode.R))
-            {
-                Application.LoadLevel(Application.loadedLevel);
-            }
 
-            if (Input.GetKeyDown(KeyCode.T))
+           // Debug.Log(one_click);
+            //this is how long in seconds to allow for a double click
+            float delay = 0.4f;
+            if (Input.GetMouseButtonDown(0))
             {
-                mainData.starsEaten++;
-                //  updateEnergyText("30");
-            }
-
-            if (live)
-            {/*
-                if (Input.GetMouseButtonDown(1))
+                if (!one_click) // first click no previous clicks
                 {
-                    Debug.Log("Clicking");
-                        RaycastHit hit;
-                        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
-                        {
-                            if (hit.transform.tag == "Background")
-                            {
-                                // Click on background. Do action
-                                doAction(1, hit.point);
-                            }
-                        }
-               
-
-
+                    one_click = true;
+                    timer_for_double_click = Time.time; // save the current time
                 }
-                /*
-               // Debug.Log(one_click);
-                //this is how long in seconds to allow for a double click
-                float delay = 0.4f;
-                if (Input.GetMouseButtonDown(0))
+                else
                 {
-                    if (!one_click) // first click no previous clicks
+                    // do two click things;
+                    RaycastHit hit;
+                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                    if (Physics.Raycast(ray, out hit, Mathf.Infinity))
                     {
-                        one_click = true;
-                        timer_for_double_click = Time.time; // save the current time
-                    }
-                    else
-                    {
-                        // do two click things;
-                        RaycastHit hit;
-                        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+                        if (hit.transform.tag == "Background")
                         {
-                            if (hit.transform.tag == "Background")
-                            {
-                                // Click on background. Do action
-                                doAction(0, hit.point);
-                            }
+                            // Click on background. Do action
+                            doAction(0, hit.point);
                         }
-                        one_click = false; // found a double click, now reset
                     }
+                    one_click = false; // found a double click, now reset
                 }
-                if (one_click)
+            }
+            if (one_click)
+            {
+                // if the time now is delay seconds more than when the first click started. 
+                if ((Time.time - timer_for_double_click) > delay)
                 {
-                    // if the time now is delay seconds more than when the first click started. 
-                    if ((Time.time - timer_for_double_click) > delay)
-                    {
 
-                        //basically if thats true its been too long and we want to reset so the next click is simply a single click and not a double click.
+                    //basically if thats true its been too long and we want to reset so the next click is simply a single click and not a double click.
 
-                        one_click = false;
-                    }
+                    one_click = false;
+                }
  
+            }
+
+            if (Input.GetMouseButtonDown(1))
+            {
+
+                if (Input.GetMouseButtonDown(1))
+                { // do one click things;
+                    RaycastHit hit;
+                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                    if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+                    {
+                        if (hit.transform.tag == "Background")
+                        {
+                            // Click on background. Do action
+                            doAction(0, hit.point);
+                        }
+                    }
                 }
-                */
+
 
             }
         }
@@ -303,93 +205,46 @@ public class GameController : MonoBehaviour {
 
 
             // Create new gravity well if possible
-           // if (gW.canInstantiate())
-            //{
-            GameObject newWell = Instantiate(gravityWellObject, new Vector3(pos.x, pos.y, 0), Quaternion.identity) as GameObject;
+            if (gW.canInstantiate())
+            {
+                Transform newWell = (Transform)Instantiate(gravityWellObject, new Vector3(pos.x, pos.y, 0), Quaternion.identity);
                 gWells.Add(newWell);
-                Debug.Log("Added " + newWell);
-                // deduct instantiation cost from energy reserves
-                mainData.energyAvailable -= newWell.transform.GetComponent<GravityWell>().getStartingCost();    
-
-               // gW.addWell();
-           // }
+                gW.addWell();
+            }
 
         }
     
         else if (actionType == 1)
         {
             // Create new repulsion field if possible
-           // if (gW.canInstantiate())
-            //{
-                Instantiate(repulsion, new Vector3(pos.x, pos.y, 0), Quaternion.identity);
-           // }
-        }
-
-    }
-
-    public void checkEnd()
-    {
-        // check end
-        if (!gameEnd)
-        {
-            if (mainData.starsEaten >= mainData.starLimit)
+            if (gW.canInstantiate())
             {
-                gameEnd = true;
-
-                introText.SetActive(true);
-                GameObject.Find("IntroText").SetActive(false);
-                GameObject.Find("EndText").GetComponent<Text>().enabled = true;
+                Instantiate(repulsion, new Vector3(pos.x, pos.y, 0), Quaternion.identity);
             }
         }
+
     }
+
 
     void updateEnergy()
     {
-       // Debug.Log("u");
         // For every active repulsor and gravitywell we must reduce energy
-        if(!threeGotten)
+        foreach (Transform gWell in gWells)
         {
-            if(mainData.starsEaten>=3)
+            try
             {
-                threeGotten = true;
-                zoomToggle();
+                gWell.GetComponent<GravityWell>().getEnergyCost();
             }
-              
+            catch
+            {
+
+            }
         }
-        checkEnd();
 
 
 
-    
-
-        foreach(GameObject g in gWells)
-        {
-
-                int energyCost = 0;
-                //try
-                //{
-                energyCost = g.transform.GetComponent<GravityWell>().getEnergyCost();
-                Debug.Log(energyCost);
-                //}
-                //catch
-                //{
-
-                //}
-                mainData.energyAvailable -= energyCost;
-            
-           
-        }
-        updateEnergyText(mainData.energyAvailable.ToString());
-    }
-
-    public void updateEnergyText(string s)
-    {
-        EnergyText.GetComponent<Text>().text = "Energy available: " + s + " Exajoules";
 
     }
-
-
-
 }
 
 public class mainVariables
@@ -398,16 +253,11 @@ public class mainVariables
     // in about a million trillion watts
     // Let's say Exawatts
     //10,000,000,000,000,000,000
-    public int energyAvailable = 2000;
+    int energyAvailable = 2000;
 
-    public int starsEaten = 0;
-    public int starLimit = 6;
-
-
-
-    
 
 }
+
 
 public class gravityWells 
 {
@@ -417,12 +267,12 @@ public class gravityWells
     {
         // Instantiate gravity well on the map if there's space 
 
-        //allowedGravityWells++;
+        allowedGravityWells++;
         // update GUI
     }
     public void addWell()
     {
-       // allowedGravityWells--;
+        allowedGravityWells--;
     }
     public int value()
     {
@@ -431,9 +281,9 @@ public class gravityWells
 
     public bool canInstantiate()
     {
-        //if (allowedGravityWells > 0)
+        if (allowedGravityWells > 0)
             return true;
-        //return false;
+        return false;
     }
 
 }

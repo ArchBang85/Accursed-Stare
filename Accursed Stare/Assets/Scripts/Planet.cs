@@ -17,24 +17,17 @@ public class Planet : GravityObject {
 
     void destroyPlanet()
     {
-        try
-        {
+        Debug.Log("Destroying Planet!");
+        GameObject deathExp = (GameObject)Instantiate(deathExplosion, transform.position, Quaternion.identity);
+        Destroy(deathExp, 3.0f);
 
-            Debug.Log("Destroying Planet!");
-            GameObject deathExp = (GameObject)Instantiate(deathExplosion, transform.position, Quaternion.identity);
-            Destroy(deathExp, 3.0f);
+        // Deactivate and then destroy to leave the trail visible for a while
+        this.transform.GetComponent<Renderer>().enabled = false;
+        this.transform.GetComponent<Rigidbody2D>().Sleep();
+        this.transform.GetComponent<Collider2D>().enabled = false;
+        Destroy(this.gameObject, 30.0f); 
 
-            // Deactivate and then destroy to leave the trail visible for a while
-            this.transform.GetComponent<Renderer>().enabled = false;
-            this.transform.GetComponent<Rigidbody2D>().Sleep();
-            this.transform.GetComponent<Collider2D>().enabled = false;
-            Destroy(this.gameObject, 30.0f);
 
-        }
-        catch
-        {
-            Debug.Log("error in destroying planet");
-        }
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -43,18 +36,6 @@ public class Planet : GravityObject {
         {
             destroyPlanet();
         }
-
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.transform.tag == "Core")
-        {
-            if (collision.transform.name == "SunHeart")
-            {
-                destroyPlanet();
-            }
-            }
 
     }
 
