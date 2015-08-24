@@ -8,6 +8,8 @@ public class SunBehaviour : MonoBehaviour {
     public List<GameObject> Planets = new List<GameObject>();
     public float GravityRadius = 2.0f;
     public float GravityPower = 2.0f;
+
+    public bool gravityFieldDisturbed = false;
 	// Use this for initialization
 	void Start () {
         createPlanets();
@@ -62,8 +64,53 @@ public class SunBehaviour : MonoBehaviour {
             planet.GetComponent<GravityObject>().initSpeed = Random.Range(0.1f, 0.3f);
             planet.GetComponent<GravityObject>().GravityPower = 0.01f;
 
+        }
+    }
+
+    public void activatePlanetaryGravity()
+    {
+        if(!gravityFieldDisturbed)
+        {
+            gravityFieldDisturbed = true;
+            // activate gravity for all planets
+            foreach(GameObject p in Planets)
+            {
+                try
+                {
+
+
+                    p.GetComponent<Planet>().enabled = true;
+                    p.GetComponent<Collider2D>().enabled = true;
+                    p.GetComponent<Planet>().initSpeed = 0f;
+                }
+                catch
+                {
+
+                }
+                }
+
 
         }
+    }
+    public void SunReverse()
+    {
+        // reverse orbits and sun spoke movement
+        foreach(GameObject p in Planets)
+        {
+            try
+            {
+                p.transform.parent.GetComponent<Orbit>().directionToggle();
+                p.transform.GetComponent<TrailRenderer>().enabled = true;
+                p.transform.GetComponent<TrailRenderer>().time = 36.0f;
+                GameObject.Find("SunSpokes").GetComponent<Orbit>().directionToggle();
+                GameObject.Find("SunSpokesCurved").GetComponent<Orbit>().directionToggle();
+            }
+            catch
+            {
+                Debug.Log("Orbit Reversal Error");
+            }
+        }
+
     }
     void FixedUpdate()
     {
@@ -73,8 +120,11 @@ public class SunBehaviour : MonoBehaviour {
         while (i < hitColliders.Length)
         {
 
-            if (hitColliders[i].tag == "Gravity" && hitColliders[i].gameObject != this.gameObject)
+            if (hitColliders[i].tag == "Gravity" || hitColliders[i].tag == "Star" || hitColliders[i].tag == "Core" && hitColliders[i].gameObject != this.gameObject)
             {
+
+
+                if (!gravityFieldDisturbed) { if (hitColliders[i].tag == "Core") { activatePlanetaryGravity(); } }
                 // force of gravity is inversely proportional to the square of the distance between them
                 float distance = Vector3.Distance(transform.position, hitColliders[i].transform.position);
                 // compensate for non-working trigger exit
@@ -85,9 +135,15 @@ public class SunBehaviour : MonoBehaviour {
                 //GroundDetectionScript = GravityObjects[i].GetComponent("GroundDetection") as GroundDetection;
                 if (localGravityPower != 0)
                 {
-
-                    hitColliders[i].transform.GetComponent<Rigidbody2D>().AddForce((transform.position - hitColliders[i].transform.position) * localGravityPower * Time.deltaTime);
-                }
+                    try
+                    {
+                        hitColliders[i].transform.GetComponent<Rigidbody2D>().AddForce((transform.position - hitColliders[i].transform.position) * localGravityPower * Time.deltaTime);
+                    }
+                    catch
+                    {
+                        Debug.Log("Gravity attraction error for the Sun");
+                    }
+                    }
             }
             i++;
         }
@@ -95,7 +151,10 @@ public class SunBehaviour : MonoBehaviour {
     }
 	// Update is called once per frame
 	void Update () {
-	
+	    if(Input.GetKeyDown(KeyCode.P))
+        {
+            //activatePlanetaryGravity();
+        }
 	}
 
     private void OnTriggerEnter2D (Collider2D other)
@@ -103,15 +162,18 @@ public class SunBehaviour : MonoBehaviour {
         if(other.tag == "Core")
         {
             // Absorb the incoming object
-            Destroy(other.transform.parent.gameObject, 0.4f);
+            Destroy(other.transform.parent.gameObject, 0.0f);
 
-
+            Debug.Log("Increasing sun size");
             // Make the sun a bit bigger
+           // this.transform.localScale *= 1.1f;            
+            if (other.name == "StarHeart")
+            {
+               // --this.transform.localScale *= 1.3f;
 
-            //
-            Debug.Log("Hello");
-
-
+                GameObject.Find("Main Camera").GetComponent<GameController>().mainData.starsEaten += 1;
+                GameObject.Find("Main Camera").GetComponent<GameController>().updateStarText();
+            }
         }
 
     }

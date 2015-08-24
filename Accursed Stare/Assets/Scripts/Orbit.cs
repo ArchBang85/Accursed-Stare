@@ -12,7 +12,18 @@ public class Orbit : MonoBehaviour {
 	void Start () {
         speed = Random.Range(0.5f, 3.0f);
 	}
-	
+
+    public void directionToggle()
+    {
+        if (clockwise)
+        {
+            clockwise = false;
+        }
+        else
+        {
+            clockwise = true;
+        }
+    }
 	// Update is called once per frame
 	void Update () {
         if (clockwise)

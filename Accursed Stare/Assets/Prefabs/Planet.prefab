@@ -117,25 +117,25 @@ TrailRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Time: 24
+  m_Time: 12
   m_StartWidth: .0199999996
   m_EndWidth: .0130000003
   m_Colors:
     m_Color[0]:
       serializedVersion: 2
-      rgba: 4294967295
+      rgba: 2751463423
     m_Color[1]:
       serializedVersion: 2
-      rgba: 4294967295
+      rgba: 2147483647
     m_Color[2]:
       serializedVersion: 2
-      rgba: 4294967295
+      rgba: 1660944383
     m_Color[3]:
       serializedVersion: 2
-      rgba: 4294967295
+      rgba: 754974719
     m_Color[4]:
       serializedVersion: 2
-      rgba: 16777215
+      rgba: 117440511
   m_MinVertexDistance: .00999999978
   m_Autodestruct: 0
 --- !u!114 &11451386
@@ -168,7 +168,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Time
-      value: 24
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_MinVertexDistance
@@ -237,6 +237,26 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_CollisionDetection
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Colors.m_Color[4].rgba
+      value: 117440511
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Colors.m_Color[3].rgba
+      value: 754974719
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Colors.m_Color[2].rgba
+      value: 1660944383
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Colors.m_Color[1].rgba
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Colors.m_Color[0].rgba
+      value: 2751463423
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

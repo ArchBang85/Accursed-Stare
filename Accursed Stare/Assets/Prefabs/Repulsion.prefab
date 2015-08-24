@@ -88,23 +88,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &153678
-GameObject:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 401722}
-  - 135: {fileID: 13519664}
-  - 114: {fileID: 11477080}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
 --- !u!1 &154508
 GameObject:
   m_ObjectHideFlags: 1
@@ -151,7 +134,6 @@ GameObject:
   - 23: {fileID: 2354408}
   - 50: {fileID: 5041058}
   - 58: {fileID: 5843592}
-  - 114: {fileID: 11485788}
   m_Layer: 0
   m_Name: Repulsion
   m_TagString: Untagged
@@ -166,7 +148,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 198126}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.69999981, y: -.800000012, z: 0}
+  m_LocalPosition: {x: 837.444824, y: 16.8644352, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 460616}
@@ -186,18 +168,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 460616}
   m_RootOrder: 1
---- !u!4 &401722
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 153678}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 460616}
-  m_RootOrder: 2
 --- !u!4 &403434
 Transform:
   m_ObjectHideFlags: 1
@@ -246,7 +216,7 @@ Transform:
   m_Children:
   - {fileID: 408570}
   m_Father: {fileID: 460616}
-  m_RootOrder: 3
+  m_RootOrder: 2
 --- !u!4 &460616
 Transform:
   m_ObjectHideFlags: 1
@@ -259,7 +229,6 @@ Transform:
   m_Children:
   - {fileID: 472826}
   - {fileID: 400852}
-  - {fileID: 401722}
   - {fileID: 431740}
   m_Father: {fileID: 400406}
   m_RootOrder: 0
@@ -412,35 +381,6 @@ MonoBehaviour:
   effectWidth: 2
   effectDistance: 32
   force: 140
---- !u!114 &11477080
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 153678}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e085aeeddf2cc1d48a9a8be51386dc90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GravityPower: 10
-  GravityObjects: []
-  GravityRadius: 5
---- !u!114 &11485788
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 198126}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36843a2212ac6f84886faa2968b67e08, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  RepulsionLifetime: 3
-  RepulsionPower: 60
-  RepulsionObjects: []
-  RepulsionRadius: 2
 --- !u!114 &11496052
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -478,18 +418,6 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: .5
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!135 &13519664
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 153678}
-  m_Material: {fileID: 13400000, guid: 8b5d0329470cd9c4fa3b60209443b1a8, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!136 &13621618
 CapsuleCollider:
